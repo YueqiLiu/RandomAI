@@ -5,6 +5,7 @@ Static MVP for `randomai.top`: a free AI generator hub designed to send qualifie
 ## Pages
 
 - `/` - homepage
+- `/prompts/blog-post-outline-generator/`
 - `/random-ai-idea-generator/`
 - `/random-prompt-generator/`
 - `/random-saas-idea-generator/`
@@ -38,6 +39,9 @@ Search for `www.topaitools4u.site` and replace paths when the real category URLs
 Good next generator pages:
 
 - `/random-chatgpt-prompt-generator/`
+- `/prompts/youtube-video-script-generator/`
+- `/prompts/seo-meta-description-generator/`
+- `/prompts/product-description-generator/`
 - `/random-ai-tool-generator/`
 - `/random-app-idea-generator/`
 - `/random-youtube-idea-generator/`

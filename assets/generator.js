@@ -228,7 +228,7 @@ function renderResult(result) {
 }
 
 function copyResult() {
-  const result = document.getElementById("result");
+  const result = document.getElementById("result") || document.getElementById("promptOutput");
   if (!result) return;
   const text = result.innerText.trim();
   const button = document.getElementById("copyResult");
@@ -261,6 +261,53 @@ function copyResult() {
   fallbackCopy();
 }
 
+function buildBlogOutlinePrompt() {
+  const topic = getControlValue("topic", "AI writing tools for bloggers");
+  const audience = getControlValue("audience", "solo bloggers and content creators");
+  const keyword = getControlValue("keyword", "best AI writing tools");
+  const tone = getControlValue("tone", "practical");
+  const length = getControlValue("length", "1500 words");
+
+  return `You are an expert SEO content strategist.
+
+Create a detailed blog post outline for the topic: ${topic}
+
+Target audience: ${audience}
+Main keyword: ${keyword}
+Tone: ${tone}
+Target length: ${length}
+
+The outline should include:
+- A compelling H1 title that naturally includes the main keyword
+- A short search intent summary
+- 5 to 7 H2 sections with 2 to 4 H3 subsections where useful
+- Key talking points for each section
+- Suggested examples, comparisons, or data points to include
+- A practical introduction hook
+- A conclusion with a clear call to action
+- 5 FAQ questions that match likely Google searches
+
+Make the outline skimmable, useful, and ready for a writer to turn into a complete article.`;
+}
+
+function initPromptTemplate() {
+  const root = document.querySelector("[data-prompt-template]");
+  if (!root) return;
+  const output = document.getElementById("promptOutput");
+  const generate = () => {
+    if (!output) return;
+    output.textContent = buildBlogOutlinePrompt();
+  };
+
+  ["topic", "audience", "keyword", "tone", "length"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("input", generate);
+    document.getElementById(id)?.addEventListener("change", generate);
+  });
+  document.getElementById("generatePrompt")?.addEventListener("click", generate);
+  document.getElementById("copyPrompt")?.addEventListener("click", copyResult);
+  generate();
+}
+
 function initGenerator() {
   const root = document.querySelector("[data-generator]");
   if (!root) return;
@@ -288,4 +335,7 @@ function initGenerator() {
   generate();
 }
 
-document.addEventListener("DOMContentLoaded", initGenerator);
+document.addEventListener("DOMContentLoaded", () => {
+  initGenerator();
+  initPromptTemplate();
+});

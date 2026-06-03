@@ -391,15 +391,27 @@ label {
 }
 
 select,
-input {
+input,
+textarea {
   width: 100%;
-  min-height: 44px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
   color: var(--ink);
   font: inherit;
+}
+
+select,
+input {
+  min-height: 44px;
   padding: 0 12px;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  padding: 12px;
+  line-height: 1.5;
 }
 
 .result {
@@ -430,6 +442,13 @@ input {
 .result ul {
   margin: 8px 0 0;
   padding-left: 19px;
+}
+
+.prompt-output {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.58;
 }
 
 .tool-actions {
@@ -465,6 +484,65 @@ input {
 .link-list a {
   color: var(--brand-dark);
   font-weight: 750;
+}
+
+.category-list {
+  display: grid;
+  gap: 2px;
+}
+
+.category-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 9px;
+  border-radius: 8px;
+  color: var(--muted);
+}
+
+.category-list a:hover,
+.category-list a.is-active {
+  background: var(--soft);
+  color: var(--brand-dark);
+}
+
+.tool-card-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.mini-tool-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.mini-tool-card strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mini-tool-card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.content-block {
+  border-top: 1px solid var(--line);
+  margin-top: 28px;
+  padding-top: 24px;
+}
+
+.content-block h2,
+.content-block h3 {
+  margin: 0 0 10px;
+}
+
+.content-block p {
+  color: var(--muted);
 }
 
 .faq-grid {
@@ -522,7 +600,8 @@ input {
 
   .generator-grid,
   .info-grid,
-  .faq-grid {
+  .faq-grid,
+  .tool-card-row {
     grid-template-columns: 1fr;
   }
 

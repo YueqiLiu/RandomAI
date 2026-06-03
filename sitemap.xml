@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://randomai.top/</loc></url>
-  <url><loc>https://randomai.top/random-ai-idea-generator/</loc></url>
-  <url><loc>https://randomai.top/random-prompt-generator/</loc></url>
-  <url><loc>https://randomai.top/random-saas-idea-generator/</loc></url>
-  <url><loc>https://randomai.top/random-business-name-generator/</loc></url>
-  <url><loc>https://randomai.top/random-blog-title-generator/</loc></url>
+  <url><loc>https://www.randomai.top/</loc></url>
+  <url><loc>https://www.randomai.top/prompts/blog-post-outline-generator/</loc></url>
+  <url><loc>https://www.randomai.top/random-ai-idea-generator/</loc></url>
+  <url><loc>https://www.randomai.top/random-prompt-generator/</loc></url>
+  <url><loc>https://www.randomai.top/random-saas-idea-generator/</loc></url>
+  <url><loc>https://www.randomai.top/random-business-name-generator/</loc></url>
+  <url><loc>https://www.randomai.top/random-blog-title-generator/</loc></url>
 </urlset>
