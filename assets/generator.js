@@ -127,6 +127,19 @@ function titleCase(value) {
   return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/`/g, "&#96;");
+}
+
 function getControlValue(id, fallback) {
   const node = document.getElementById(id);
   return node && node.value ? node.value : fallback;
@@ -219,12 +232,12 @@ function renderResult(result) {
 
   const sections = result.sections.map(([label, value]) => {
     const body = Array.isArray(value)
-      ? `<ul>${value.map((item) => `<li>${item}</li>`).join("")}</ul>`
-      : `<p>${value}</p>`;
-    return `<div class="result-section"><strong>${label}</strong>${body}</div>`;
+      ? `<ul>${value.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+      : `<p>${escapeHtml(value)}</p>`;
+    return `<div class="result-section"><strong>${escapeHtml(label)}</strong>${body}</div>`;
   }).join("");
 
-  container.innerHTML = `<h3>${result.title}</h3>${sections}`;
+  container.innerHTML = `<h3>${escapeHtml(result.title)}</h3>${sections}`;
 }
 
 function copyResult() {
@@ -329,7 +342,7 @@ function initGenerator() {
 
   const toolList = document.getElementById("toolLinks");
   if (toolList) {
-    toolList.innerHTML = meta.toolLinks.map(([label, href]) => `<a href="${href}" target="_blank" rel="noopener">${label}</a>`).join("");
+    toolList.innerHTML = meta.toolLinks.map(([label, href]) => `<a href="${escapeAttribute(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`).join("");
   }
 
   generate();
