@@ -1,48 +1,29 @@
-# RandomAI.top MVP
+# Random AI · AI Capsule Machine
 
-Static MVP for `randomai.top`: a free AI generator hub designed to send qualified SEO traffic to TopAITools4U.
+The homepage replaces the previous generator hub with an interactive Colorfigures gashapon machine. Existing generator routes remain available.
 
-## Pages
+## Preview
 
-- `/` - homepage
-- `/prompts/blog-post-outline-generator/`
-- `/random-ai-idea-generator/`
-- `/random-prompt-generator/`
-- `/random-saas-idea-generator/`
-- `/random-business-name-generator/`
-- `/random-blog-title-generator/`
+Run `python3 -m http.server 4173 --bind 127.0.0.1`, then open http://127.0.0.1:4173.
 
-## Local preview
+## Interactions
 
-```bash
-python3 -m http.server 4173
-```
+Free coin → crank animation → capsule rolls out → open capsule → AI product description and external experience link → put prize away. Refill restores 24 capsules. Includes five body palettes, wobble control, orbit dragging, arrow-key camera control, turntable and zoom/pinch controls. See-through and Labels are intentionally not mounted.
 
-Then open:
+## Product catalog
 
-```text
-http://localhost:4173
-```
+`assets/products.js` is an initial editorial seed, not a live TopAITools4U integration. Replace `AI_PRODUCTS` with a catalog export when the source data is connected. Product schema: `id`, `name`, `category`, `description`, `play`, `url`. A shuffled bag avoids repeats until all seed products have been drawn. Saved discoveries use local browser storage. Machine toy collection resets on reload as in the source.
 
-## Update TopAITools4U links
+Cross-site links include UTM attribution. The destination is the existing `/tools` directory; no invented product detail routes are used.
 
-The cross-site recommendation links live in:
+## Attribution
 
-```text
-assets/generator.js
-```
+Machine rendering and animations adapted from [Colorfigures by April Zhu](https://april-zhu.com/colorfigures). The original MIT license and credits are preserved in `assets/vendor/colorfigures/LICENSE.txt`. Source captured from the public gashapon demo on 2026-10-29. `gashapon.js` contains the locally bundled rendering core and figure code, with Random AI branding and product hooks. No source assets are hotlinked.
 
-Search for `www.topaitools4u.site` and replace paths when the real category URLs are ready.
+## Hosting
 
-## Next SEO expansion
+The existing static Vercel configuration remains in use. Scripts are external to comply with the existing CSP; image policy also allows local Blob URLs used to bake SVG noise textures. No production deployment has been performed.
 
-Good next generator pages:
+## Languages
 
-- `/random-chatgpt-prompt-generator/`
-- `/prompts/youtube-video-script-generator/`
-- `/prompts/seo-meta-description-generator/`
-- `/prompts/product-description-generator/`
-- `/random-ai-tool-generator/`
-- `/random-app-idea-generator/`
-- `/random-youtube-idea-generator/`
-- `/random-startup-name-generator/`
+The capsule homepage supports English and Simplified Chinese. First visits follow the browser’s preferred language: Chinese locales use Simplified Chinese; other locales fall back to English. The footer language dropdown switch UI, status messages, accessibility labels, metadata, and product descriptions without resetting the machine. An explicit choice persists in local storage under `randomai-language`; saved choices override browser detection on later visits. Translation map: `assets/i18n.js`; product English fields: `assets/products.js`. Existing legacy generator subpages retain their original English content.
