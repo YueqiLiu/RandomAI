@@ -52,3 +52,5 @@ body{padding-top:16px}.brandbar{padding-bottom:12px}.intro{padding:12px 0 0}.int
 .language-trigger:focus-visible,.language-option:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 @media(max-width:560px){.language-control{width:100%}.language-trigger{font-size:16px;min-height:48px}.language-menu{min-width:0;width:100%}.language-option{font-size:16px;min-height:48px}}
 @media(prefers-reduced-motion:reduce){.language-chevron{transition:none}}
+
+.collected-prizes{display:inline-flex;flex-wrap:wrap;justify-content:flex-end;max-width:152px;gap:6px;padding-top:6px}.collected-prize{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:8px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink)}.collected-prize:hover{background:#e6eee5;border-color:#655e51}.collected-prize[aria-pressed=true]{background:#d5e9dc!important;color:var(--ink)!important;border-color:#365e4b}.collected-prize svg{width:24px;height:24px;display:block}.collected-prize:focus-visible{outline:2px solid var(--ink);outline-offset:3px}

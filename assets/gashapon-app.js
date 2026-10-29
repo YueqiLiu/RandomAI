@@ -8,7 +8,7 @@ const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/
 let shown=null;
 const tr=key=>I18N.t(key);
 window.renderProduct=state=>{
- const p=state.out && state.out.open>=1 && state.out.product;
+ const p=state.reviewProduct || (state.out && state.out.open>=1 && state.out.product);
  if(!p){productSection.hidden=true;shown=null;return;}if(shown===p && productSection.dataset.lang===I18N.lang)return;shown=p;productSection.dataset.lang=I18N.lang;productSection.hidden=false;
  productSection.replaceChildren();
  const content=I18N.lang==='en' ? p.en : p;
@@ -77,3 +77,13 @@ function applyLanguage(){
  UI.drawStats();shown=null;window.renderProduct(UI.st);
 }
 document.addEventListener('languagechange',applyLanguage);applyLanguage();
+
+// Collected toys retain the product from that exact draw, even when toy types repeat.
+document.getElementById('stats').addEventListener('click',event=>{
+ const button=event.target.closest('[data-collection-index]');if(!button)return;
+ const index=Number(button.dataset.collectionIndex);const entry=UI.st.collected[index];
+ if(!entry?.product)return;
+ UI.st.reviewIndex=index;UI.st.reviewProduct=entry.product;
+ UI.drawStats();window.renderProduct(UI.st);
+ productSection.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+});

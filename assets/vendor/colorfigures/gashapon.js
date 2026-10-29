@@ -665,7 +665,7 @@ function prizeArt(kind, b, k=1.3){
 }
 
 /* ---------- state ---------- */
-const st = { pal:'mint', coin:false, coinT:null, crank:0, turn:null, jig:null, roll:null, out:null, pile:freshPile(), served:0, collected:[] };
+const st = { pal:'mint', coin:false, coinT:null, crank:0, turn:null, jig:null, roll:null, out:null, pile:freshPile(), served:0, collected:[], reviewProduct:null, reviewIndex:null };
 const PRIZE_KEYS = Object.keys(PRIZES);
 
 /* ---------- the dispensed capsule's path: chute -> lip -> drop -> bounce -> rest ---------- */
@@ -1075,7 +1075,7 @@ function insertCoin(st, ui){
   if (st.coin) return ui.flash('已投入灵感币，请转动手柄');
   if (!st.pile.length) return ui.flash('扭蛋已空，请先补充');
   if (st.out) return ui.flash('请先打开并收起当前扭蛋');
-  st.coinT = 0; kick();
+  st.reviewProduct = null; st.reviewIndex = null; st.coinT = 0; kick();
 }
 function prepareTurn(seed){
   const pile = st.pile, low = pile.reduce((a,b) => (b.p[2] - .3*Math.hypot(b.p[0]-CX, b.p[1]-CY)) < (a.p[2] - .3*Math.hypot(a.p[0]-CX, a.p[1]-CY)) ? b : a);
@@ -1093,7 +1093,7 @@ function turnCrank(st, ui){
 function clickCapsule(st, ui){
   if (!st.out || st.roll) return;
   if (st.out.open <= 0){ st.out.opening = true; kick(); return; }
-  if (st.out.open >= 1){ const n = PRIZES[st.out.prize]; if(st.out.product) saveDiscovery(st.out.product); st.collected.push(st.out.prize); st.out = null; ui.flash('已收起惊喜，继续发现下一个 AI'); }
+  if (st.out.open >= 1){ const n = PRIZES[st.out.prize]; if(st.out.product) saveDiscovery(st.out.product); st.collected.push({prize:st.out.prize, product:st.out.product}); st.reviewProduct = null; st.reviewIndex = null; st.out = null; ui.flash('已收起惊喜，继续发现下一个 AI'); }
 }
 
 
@@ -1320,7 +1320,7 @@ UI = mountFigure({
   ],
   next: st => busy() || (st.out && st.out.opening) ? -1 : st.out ? (st.out.open >= 1 ? 3 : 2) : !st.pile.length ? 4 : st.coin ? 1 : 0,
   stats: st => [ { label:I18N.t('灵感币 · 免费'), value: st.coin ? '1' : '0' }, { label:I18N.t('机内扭蛋'), value: st.pile.length, small:true },
-    { label:`${I18N.t('已收集')} · ${st.collected.length}`, value: st.collected.length ? `<span style="display:inline-flex;flex-wrap:wrap;justify-content:flex-end;max-width:150px;gap:2px">${st.collected.map(k => PRIZE_ICON[k]).join('')}</span>` : '—', small:true } ],
+    { label:`${I18N.t('已收集')} · ${st.collected.length}`, value: st.collected.length ? `<span class="collected-prizes">${st.collected.map((entry,index) => { const label = (I18N.lang === 'en' ? 'View ' : '查看产品：') + (entry.product?.name || PRIZES[entry.prize]); const safe = label.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); return `<button type="button" class="collected-prize" data-collection-index="${index}" aria-label="${safe}" title="${safe}" aria-pressed="${st.reviewIndex === index}"><span aria-hidden="true">${PRIZE_ICON[entry.prize]}</span></button>`; }).join('')}</span>` : '—', small:true } ],
   acts:{
     slot:(st, el, ui) => insertCoin(st, ui),
     crank:(st, el, ui) => turnCrank(st, ui),
