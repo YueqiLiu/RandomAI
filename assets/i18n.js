@@ -14,6 +14,7 @@
  '免费灵感币，仅用于互动体验。':'Coins are free and for play only.',
  '探索完整产品库：':'Explore the full directory: ', '扭蛋机基于 ':'Machine by ',
  '你发现了 · ':'You discovered · ','试试这个：':'Try this: ',
+ '在 TopAITools4U 查看详情 ↗':'View details on TopAITools4U ↗',
  '体验产品 ↗':'Try this tool ↗','去 TopAITools4U 探索更多 ↗':'Explore more on TopAITools4U ↗',
  '将在官网体验；注册与收费规则以产品官网为准。':'Opens the official website. Sign-up and pricing depend on the tool.',
  '已投入灵感币，请转动手柄':'A coin is already in. Turn the crank.',

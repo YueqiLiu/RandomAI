@@ -7,6 +7,12 @@ document.body.append(footer);
 const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css';document.head.append(css);
 let shown=null;
 const tr=key=>I18N.t(key);
+function toolReferralUrl(value){
+ const url=new URL(value);
+ url.searchParams.set('ref','randomai.top');
+ return url.href;
+}
+
 window.renderProduct=state=>{
  const p=state.reviewProduct || (state.out && state.out.open>=1 && state.out.product);
  if(!p){productSection.hidden=true;shown=null;return;}if(shown===p && productSection.dataset.lang===I18N.lang)return;shown=p;productSection.dataset.lang=I18N.lang;productSection.hidden=false;
@@ -17,8 +23,8 @@ window.renderProduct=state=>{
  const desc=document.createElement('p');desc.textContent=content.description;
  const play=document.createElement('p');play.className='play';play.textContent=tr('试试这个：')+content.play;
  const links=document.createElement('div');links.className='product-links';
- const visit=document.createElement('a');visit.className='visit';visit.href=p.url;visit.target='_blank';visit.rel='noopener noreferrer';visit.textContent=tr('体验产品 ↗');
- const more=document.createElement('a');more.href='https://www.topaitools4u.site/tools?utm_source=randomai&utm_medium=referral&utm_campaign=capsule';more.target='_blank';more.rel='noopener noreferrer';more.textContent=tr('去 TopAITools4U 探索更多 ↗');
+ const visit=document.createElement('a');visit.className='visit';visit.href=toolReferralUrl(p.url);visit.target='_blank';visit.rel='noopener noreferrer';visit.textContent=tr('体验产品 ↗');
+ const more=document.createElement('a');const detail=new URL(p.detailUrl || 'https://www.topaitools4u.site/tools');detail.searchParams.set('utm_source','randomai');detail.searchParams.set('utm_medium','referral');detail.searchParams.set('utm_campaign','capsule');more.href=detail.href;more.target='_blank';more.rel='noopener noreferrer';more.textContent=tr(p.detailUrl?'在 TopAITools4U 查看详情 ↗':'去 TopAITools4U 探索更多 ↗');
  links.append(visit,more);const note=document.createElement('small');note.textContent=tr('将在官网体验；注册与收费规则以产品官网为准。');
  productSection.append(label,name,desc,play,links,note);
 };

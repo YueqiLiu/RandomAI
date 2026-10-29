@@ -12,9 +12,21 @@ Free coin → crank animation → capsule rolls out → open capsule → AI prod
 
 ## Product catalog
 
-`assets/products.js` is an initial editorial seed, not a live TopAITools4U integration. Replace `AI_PRODUCTS` with a catalog export when the source data is connected. Product schema: `id`, `name`, `category`, `description`, `play`, `url`. A shuffled bag avoids repeats until all seed products have been drawn. Saved discoveries use local browser storage. Machine toy collection resets on reload as in the source.
+Random AI uses TopAITools4U's existing public `https://www.topaitools4u.site/api/tools` endpoint. The source website merges its curated tools with Supabase submissions whose normalized status is exactly approved. The verified source response contained 220 published tools on 2026-10-29. No Supabase schema, permissions, or source project files were modified.
 
-Cross-site links include UTM attribution. The destination is the existing `/tools` directory; no invented product detail routes are used.
+`vercel.json` proxies same-origin `/api/catalog` to that public endpoint. On page load, the browser starts with the 220-tool snapshot in `assets/catalog-snapshot.js`, fetches the current catalog, then refreshes every five minutes while visible and when returning after five minutes. Valid updates reset the shuffled bag; active capsules and collected products keep their original product objects. Invalid or unavailable responses retain the last valid catalog. Source-side caching may add delay; this is periodic synchronization, not realtime.
+
+Only public fields are bundled. Contact emails, submitter hashes, pending submissions and screenshot storage/signed URLs are never imported. Outbound links accept only HTTP(S) without credentials. Every Try this tool link sets `ref=randomai.top` while preserving other parameters and fragments. The secondary action opens the real TopAITools4U `/tools/<slug>` page with attribution.
+
+English descriptions come from the source. Chinese editorial copy is reused for matching seed tools; otherwise Chinese UI displays the source's English description with a Chinese general trial suggestion. This is not an automatic translation service.
+
+Refresh the bundled offline fallback with Node.js 22+:
+
+```bash
+node scripts/sync-catalog.mjs
+```
+
+Local `python3 -m http.server` does not implement Vercel rewrites and uses the bundled snapshot when `/api/catalog` returns 404. To verify live synchronization locally, use a Vercel-aware development server. No API keys or environment variables are required for this integration. Saved discoveries use local browser storage; the machine collection resets on reload.
 
 ## Attribution
 

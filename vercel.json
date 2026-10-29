@@ -29,5 +29,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/catalog",
+      "destination": "https://www.topaitools4u.site/api/tools"
+    }
   ]
 }
