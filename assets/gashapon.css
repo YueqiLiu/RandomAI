@@ -54,3 +54,43 @@ body{padding-top:16px}.brandbar{padding-bottom:12px}.intro{padding:12px 0 0}.int
 @media(prefers-reduced-motion:reduce){.language-chevron{transition:none}}
 
 .collected-prizes{display:inline-flex;flex-wrap:wrap;justify-content:flex-end;max-width:152px;gap:6px;padding-top:6px}.collected-prize{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:8px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink)}.collected-prize:hover{background:#e6eee5;border-color:#655e51}.collected-prize[aria-pressed=true]{background:#d5e9dc!important;color:var(--ink)!important;border-color:#365e4b}.collected-prize svg{width:24px;height:24px;display:block}.collected-prize:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* Quiet, readable supporting content beneath the interactive experience. */
+#discovery-guide{width:100%;max-width:880px;margin:48px auto 0;padding:32px 0 0;border-top:1px solid var(--rule);color:var(--ink);font-family:Arial,"PingFang SC",sans-serif;font-size:15px;line-height:1.75}
+#discovery-guide p{margin:0}
+#discovery-guide .guide-eyebrow{font:11px/1.5 ui-monospace,monospace;letter-spacing:.12em;color:#655e51;margin-bottom:12px}
+#discovery-guide h2{font-size:clamp(23px,3vw,29px);line-height:1.3;letter-spacing:-.025em;margin:0 0 14px}
+#discovery-guide .guide-lead{max-width:640px;color:#655e51;font-size:16px}
+#discovery-guide h3{font-size:14px;line-height:1.5;margin:0 0 16px;font-weight:600}
+.guide-examples{margin-top:30px}
+.guide-example-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.guide-example{border-top:1px solid var(--rule);padding:16px 0}
+.guide-number{display:block;font:11px/1.5 ui-monospace,monospace;color:#655e51;margin-bottom:8px}
+.guide-example>a{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:18px;font-weight:600;text-decoration:none}
+.guide-example>a:hover{text-decoration:underline}
+#discovery-guide .guide-example p{color:#655e51;font-size:14px;max-width:26ch;margin-top:4px}
+#discovery-guide .guide-note{font-size:12px;color:#655e51;margin-top:12px}
+.guide-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;border-top:1px solid var(--rule);padding-top:24px;margin-top:26px}
+#discovery-guide .guide-bottom h3{margin-bottom:8px}
+.guide-bottom>div>p{color:#655e51;font-size:14px}
+.guide-directory{border-left:1px solid var(--rule);padding-left:28px;align-self:start}
+.guide-directory a{display:inline-block;padding:10px 0;font-size:14px;line-height:1.7}
+#discovery-guide a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+@media(max-width:560px){#discovery-guide{margin-top:32px;padding-top:24px}.guide-example-grid{grid-template-columns:1fr;gap:0}.guide-example{display:grid;grid-template-columns:26px 1fr;column-gap:12px;padding:12px 0}.guide-number{grid-row:1/3;margin:14px 0 0}#discovery-guide .guide-example p{grid-column:2;max-width:none;margin:0}.guide-bottom{grid-template-columns:1fr;gap:20px}.guide-directory{border-left:0;border-top:1px solid var(--rule);padding:18px 0 0}}
+
+/* A full-width introduction, then two small prompts for exploring the prize. */
+#product h2{font-size:clamp(24px,3.5vw,34px);line-height:1.25;max-width:38ch;overflow-wrap:anywhere;letter-spacing:-.025em}
+#product .product-kicker{font-size:12px;line-height:1.6;color:#655e51;margin-bottom:12px}
+.product-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:20px 0 24px}
+.product-fact{padding:18px 20px;background:#e5e7dc66;border:1px solid var(--rule);border-radius:16px}
+.product-fact h3{font:600 13px/1.5 Arial,"PingFang SC",sans-serif;color:#655e51;margin:0 0 8px}
+#product .product-fact p{font:15px/1.75 Arial,"PingFang SC",sans-serif;margin:0;overflow-wrap:anywhere}
+.product-fact.product-summary{grid-column:1/-1;padding:0 0 4px;border:0;background:none;border-radius:0;max-width:76ch}
+.product-summary h3{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+#product .product-summary p{font-size:16px;line-height:1.8}
+.product-summary .is-collapsed{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.description-toggle{display:inline-block;min-height:44px;padding:6px 0;border:0;background:none;color:#655e51;font:13px/1.5 inherit;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.description-toggle:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+#product .product-links{gap:16px 24px;align-items:center}
+#product>small{display:block;margin-top:14px;font-size:11px;line-height:1.7;color:#655e51}
+@media(max-width:650px){.product-facts{grid-template-columns:1fr;gap:12px}.product-fact{padding:16px}.product-fact.product-summary{padding:0 0 6px}#product h2{font-size:25px}#product .product-links{align-items:flex-start;flex-direction:column;gap:8px}}

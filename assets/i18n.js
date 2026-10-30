@@ -1,6 +1,22 @@
+// Preserve the static introduction before the machine mounts its interface.
+window.randomaiDiscoveryGuide=document.getElementById('discovery-guide');
 /* Follow the browser language on first visit; explicit choices take precedence. */
 (() => {
  const copy = {
+ "装好好奇心，准备开扭":"FOLLOW YOUR CURIOSITY",
+ "下一颗，藏着什么小惊喜？":"Your next capsule. A new possibility.",
+ "欢迎来到 RandomAI 的 AI 扭蛋小铺！投一枚免费灵感币，转一转手柄，再打开扭蛋——今天会和哪个 AI 工具碰个面呢？":"RandomAI is a free random AI tool generator. Insert a coin, turn the crank, and discover something worth trying.",
+ "先偷看几颗扭蛋……":"A few possibilities inside",
+ "脑袋里冒出一个问号？让它帮你找找答案。":"Ask something you have always wondered about.",
+ "接住你的灵光一闪，变成一份 PPT。":"Turn a little idea into a presentation.",
+ "把今天的心情，哼成一首小曲。":"Give an ordinary day its own soundtrack.",
+ "这只是小小一角。下一颗是谁？打开才揭晓！":"Examples from the discovery pool. Your next draw is a surprise.",
+ "小小扭蛋里，都装了些什么？":"What goes into a capsule?",
+ "会写作的、会编程的、会画画的、会做音乐的……各种 AI 工具都藏在扭蛋里等你发现。每颗都附有小介绍和官网入口，遇到喜欢的，就去试试吧！":"The pool brings together AI tools for different kinds of tasks, each with a short introduction and an official website link.",
+ "灵感币免费，放心扭。工具是否需要注册或付费，记得去官网看一眼哦。":"Drawing a capsule is free. Individual tools may require an account or paid plan.",
+ "心里已经有想找的工具啦？":"Have a task in mind?",
+ "去 TopAITools4U 逛逛 ↗":"Find your tool on TopAITools4U ↗",
+
  'Random AI · AI 盲盒':'Random AI · AI Capsule Machine',
  'Random AI 首页':'Random AI home',
  '浏览全部 AI ↗':'Browse all AI ↗',

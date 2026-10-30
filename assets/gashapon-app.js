@@ -1,10 +1,13 @@
 /* Random AI product layer — keeps Colorfigures' original animation state machine. */
 const productSection=document.createElement('section');productSection.id='product';productSection.hidden=true;productSection.setAttribute('aria-live','polite');
 document.querySelector('.controls').before(productSection);
+// Keep the same crawlable introduction node, after the machine and any revealed product.
+const discoveryGuide=window.randomaiDiscoveryGuide;
+if(discoveryGuide) document.querySelector('.controls').after(discoveryGuide);
 const footer=document.createElement('footer');footer.className='site-footer';
 footer.innerHTML=`<div class="footer-main"><div class="footer-directory"><span class="footer-eyebrow" data-i18n="探索完整产品库："></span><a href="https://www.topaitools4u.site/tools?utm_source=randomai&utm_medium=referral&utm_campaign=footer" target="_blank" rel="noopener noreferrer">TopAITools4U <span aria-hidden="true">↗</span></a></div></div><div class="footer-meta"><span data-i18n="免费灵感币，仅用于互动体验。"></span><span class="footer-credit"><span data-i18n="扭蛋机基于 "></span><a href="https://april-zhu.com/colorfigures" target="_blank" rel="noopener noreferrer">Colorfigures · April Zhu</a><span aria-hidden="true"> / </span><a href="/assets/vendor/colorfigures/LICENSE.txt">MIT</a></span></div>`;
 document.body.append(footer);
-const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css';document.head.append(css);
+const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=discovery-7';document.head.append(css);
 let shown=null;
 const tr=key=>I18N.t(key);
 function toolReferralUrl(value){
@@ -20,13 +23,37 @@ window.renderProduct=state=>{
  const content=I18N.lang==='en' ? p.en : p;
  const label=document.createElement('p');label.className='product-kicker';label.textContent=tr('你发现了 · ')+content.category;
  const name=document.createElement('h2');name.textContent=p.name;
- const desc=document.createElement('p');desc.textContent=content.description;
- const play=document.createElement('p');play.className='play';play.textContent=tr('试试这个：')+content.play;
+ const experiment=discoveryExperiment(p);
+ const facts=document.createElement('div');facts.className='product-facts';
+ const en=I18N.lang==='en';
+ const task=p.id && editorialTranslations.has(p.id)?content.play:(en?experiment.playEn:experiment.play);
+ for(const [heading,text] of [
+  [en?'What it does':'它有什么本领？',content.description],
+  [en?'Try a little task':'先玩个小任务',task],
+  [en?'Why give it a go?':'为什么值得试试？',en?experiment.reasonEn:experiment.reason]
+ ]){
+  const item=document.createElement('div');item.className='product-fact';
+  const title=document.createElement('h3');title.textContent=heading;
+  const body=document.createElement('p');body.textContent=text;
+  item.append(title,body);
+  if(facts.children.length===0){
+   item.classList.add('product-summary');
+   if(text.length>280){
+    body.classList.add('is-collapsed');
+    const toggle=document.createElement('button');toggle.type='button';toggle.className='description-toggle';
+    toggle.setAttribute('aria-expanded','false');body.id='product-description';toggle.setAttribute('aria-controls',body.id);
+    toggle.textContent=en?'Read more':'展开看看';
+    toggle.addEventListener('click',()=>{const expanded=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(expanded));body.classList.toggle('is-collapsed',!expanded);toggle.textContent=expanded?(en?'Show less':'收起来'):(en?'Read more':'展开看看');});
+    item.append(toggle);
+   }
+  }
+  facts.append(item);
+ }
  const links=document.createElement('div');links.className='product-links';
  const visit=document.createElement('a');visit.className='visit';visit.href=toolReferralUrl(p.url);visit.target='_blank';visit.rel='noopener noreferrer';visit.textContent=tr('体验产品 ↗');
  const more=document.createElement('a');const detail=new URL(p.detailUrl || 'https://www.topaitools4u.site/tools');detail.searchParams.set('utm_source','randomai');detail.searchParams.set('utm_medium','referral');detail.searchParams.set('utm_campaign','capsule');more.href=detail.href;more.target='_blank';more.rel='noopener noreferrer';more.textContent=tr(p.detailUrl?'在 TopAITools4U 查看详情 ↗':'去 TopAITools4U 探索更多 ↗');
  links.append(visit,more);const note=document.createElement('small');note.textContent=tr('将在官网体验；注册与收费规则以产品官网为准。');
- productSection.append(label,name,desc,play,links,note);
+ productSection.append(label,name,facts,links,note);
 };
 document.getElementById('fig').setAttribute('tabindex','0');document.getElementById('fig').setAttribute('data-i18n-aria','AI 扭蛋机。拖动空白处旋转，方向键调整视角；也可使用上方操作按钮。');
 UI.render();
@@ -72,7 +99,7 @@ languagePicker.addEventListener('focusout',event=>{if(!languagePicker.contains(e
 languageControl.append(languageTrigger,languageMenu);languagePicker.append(languageLabel,languageControl);footer.querySelector('.footer-main').append(languagePicker);
 function applyLanguage(){
  document.documentElement.lang=I18N.lang==='en'?'en':'zh-CN';
- document.title=tr('Random AI · AI 盲盒');
+ document.title='Random AI Tool Generator – Discover Something New | RandomAI';
  document.querySelector('meta[name="description"]').content=I18N.lang==='en'?'Insert a free coin, turn the crank, and discover an AI tool. Explore a playful capsule machine with five colours and interactive rotation.':'投入一枚免费灵感币，转动手柄，打开 AI 盲盒。支持五种机身颜色和交互式旋转。';
  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=tr(el.dataset.i18n);});
  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{el.setAttribute('aria-label',tr(el.getAttribute('data-i18n-aria')));if(el.classList.contains('sw'))el.title=el.getAttribute('aria-label');});

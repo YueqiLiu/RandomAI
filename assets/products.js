@@ -63,3 +63,20 @@ async function refreshCatalog(){
 refreshCatalog();
 setInterval(()=>{if(!document.hidden)refreshCatalog();},300000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-lastCatalogAttempt>=300000)refreshCatalog();});
+
+// Small experiments describe a way to evaluate a tool, without promising capabilities.
+function discoveryExperiment(product){
+ const category=product.en?.category || product.category || '';
+ const recipes=[
+  [/Presentations/i,'把周末出游的三个安排，整理成一份小演示。','Turn three weekend plans into a short presentation.','从熟悉的内容开始，看看它做出的结构和版式合不合你心意。','A familiar topic makes it easy to judge the structure and layout.'],
+  [/Coding|Developer|App Builder|Website Builder|UI Builder/i,'挑一个小功能，比如待办清单，看看它能怎样帮上忙。','Pick a tiny feature, such as a to-do list, and explore how it can help.','拿一个小需求试手，更容易看出它能帮你省下哪一步。','A small feature helps you see which part of your workflow it could simplify.'],
+  [/Music|Audio|Voice/i,'准备两句自己的文字，试试它提供的声音创作功能。','Bring two lines of your own text and explore its audio features.','文字变成声音，会不会带来不一样的感觉？亲耳听听就知道。','Hear whether a new sound gives your idea a different feel.'],
+  [/Video/i,'挑一个十秒钟的小故事，试试它能帮你完成哪一步。','Choose a ten-second story and try one step with this tool.','先做一小段，看看效果和操作方式是不是你喜欢的。','A short experiment lets you judge the result and the workflow.'],
+  [/Design|Image/i,'拿一张自己的照片或一个小想法，试做一份视觉素材。','Bring a photo or a small idea and try making a visual asset.','用自己的素材试一试，比看示例更容易找到喜欢的效果。','Your own material makes the result easier to judge than a demo.'],
+  [/Search|Research/i,'挑一个你好奇的问题，看看它提供了哪些资料和线索。','Explore a question you are curious about and inspect the material it offers.','从一个小问题出发，也许能找到平时没注意到的新线索。','One small question can reveal a lead you might otherwise miss.'],
+  [/Writing/i,'拿一小段自己的文字，看看它能怎样帮你打磨。','Bring a short paragraph of your own and explore how it can help refine it.','前后对照读一遍，看看它有没有接住你想表达的意思。','Compare before and after to see whether it preserves what you wanted to say.'],
+  [/Education/i,'选一个正在学的知识点，试试它适合怎样陪你学习。','Choose a topic you are learning and explore how it could support you.','用熟悉的知识点试手，更容易判断它的讲解适不适合你。','A familiar topic helps you judge whether its approach suits you.']
+ ];
+ const recipe=recipes.find(([pattern])=>pattern.test(category));
+ return {play:recipe?.[1] || '带上一个手头的小需求，先试试它最主要的功能。',playEn:recipe?.[2] || 'Bring a small task and try its main feature.',reason:recipe?.[3] || '先花几分钟玩一玩，看看它能不能给你的日常多一点便利或灵感。',reasonEn:recipe?.[4] || 'A few minutes with a real task can show whether it adds convenience or inspiration.'};
+}
