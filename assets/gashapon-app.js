@@ -7,7 +7,7 @@ if(discoveryGuide) document.querySelector('.controls').after(discoveryGuide);
 const footer=document.createElement('footer');footer.className='site-footer';
 footer.innerHTML=`<div class="footer-main"><div class="footer-directory"><span class="footer-eyebrow" data-i18n="探索完整产品库："></span><a href="https://www.topaitools4u.site/tools?utm_source=randomai&utm_medium=referral&utm_campaign=footer" target="_blank" rel="noopener noreferrer">TopAITools4U <span aria-hidden="true">↗</span></a></div></div><div class="footer-meta"><span data-i18n="免费灵感币，仅用于互动体验。"></span><span class="footer-credit"><span data-i18n="扭蛋机基于 "></span><a href="https://april-zhu.com/colorfigures" target="_blank" rel="noopener noreferrer">Colorfigures · April Zhu</a><span aria-hidden="true"> / </span><a href="/assets/vendor/colorfigures/LICENSE.txt">MIT</a></span></div>`;
 document.body.append(footer);
-const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=discovery-7';document.head.append(css);
+const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=discovery-9';document.head.append(css);
 let shown=null;
 const tr=key=>I18N.t(key);
 function toolReferralUrl(value){
@@ -101,7 +101,12 @@ function applyLanguage(){
  document.documentElement.lang=I18N.lang==='en'?'en':'zh-CN';
  document.title='Random AI Tool Generator – Discover Something New | RandomAI';
  document.querySelector('meta[name="description"]').content=I18N.lang==='en'?'Insert a free coin, turn the crank, and discover an AI tool. Explore a playful capsule machine with five colours and interactive rotation.':'投入一枚免费灵感币，转动手柄，打开 AI 盲盒。支持五种机身颜色和交互式旋转。';
- document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=tr(el.dataset.i18n);});
+ document.querySelectorAll('[data-i18n]').forEach(el=>{
+  // The static guide already contains English: retain it as a safe fallback.
+  if(el.closest('#discovery-guide') && !el.hasAttribute('data-copy-en'))el.dataset.copyEn=el.textContent;
+  const translated=tr(el.dataset.i18n);
+  el.textContent=I18N.lang==='en' && translated===el.dataset.i18n && el.hasAttribute('data-copy-en')?el.dataset.copyEn:translated;
+ });
  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{el.setAttribute('aria-label',tr(el.getAttribute('data-i18n-aria')));if(el.classList.contains('sw'))el.title=el.getAttribute('aria-label');});
  languageLabel.textContent=I18N.lang==='en'?'Language':'语言';
  triggerLabel.textContent=I18N.lang==='en'?'English':'简体中文';

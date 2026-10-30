@@ -3,6 +3,20 @@ window.randomaiDiscoveryGuide=document.getElementById('discovery-guide');
 /* Follow the browser language on first visit; explicit choices take precedence. */
 (() => {
  const copy = {
+"第一次来？三步开出小惊喜":"Your first capsule, in three little steps",
+"投一枚币":"Insert a coin",
+"点一下「投入灵感币」，免费领一份好奇心。":"Tap “Insert coin” to start. The coins are free.",
+"转一转":"Turn the crank",
+"点「转动手柄」，等小扭蛋滚出来。":"Tap “Turn crank” and watch a capsule roll out.",
+"打开看看":"Open your surprise",
+"点「打开扭蛋」，认识新工具。喜欢就去试试，玩完点「收起惊喜」继续扭。":"Tap “Open capsule” to meet your tool. Try it out, then tap “Put prize away” for another draw.",
+"还有一点小好奇？":"A few more curious questions",
+"扭蛋抽完了怎么办？":"What if the machine runs out?",
+"点一下「补充扭蛋」，小机器就又装满啦。已经收集的小玩具也可以点开，回看当时遇到的工具。":"Tap “Refill” to fill the machine again. You can also tap a collected toy to revisit the tool from that draw.",
+"我做的产品，也能住进扭蛋里吗？":"Can my product join the capsule machine?",
+"当然欢迎来敲门！先到 TopAITools4U 填写产品资料，按页面提示在自己的网站添加并验证徽章，再提交审核。审核通过并收录的产品会随产品库更新进入随机抽取范围；不会保证每次都被抽到哦。":"We would love to hear about it! Submit your product details on TopAITools4U, add and verify its badge on your website, then send it for review. Approved listings join the random selection as the catalog updates. Each draw is random, so placement is not guaranteed.",
+"带我的产品来报到 ↗":"Submit my product ↗",
+
  "装好好奇心，准备开扭":"FOLLOW YOUR CURIOSITY",
  "下一颗，藏着什么小惊喜？":"Your next capsule. A new possibility.",
  "欢迎来到 RandomAI 的 AI 扭蛋小铺！投一枚免费灵感币，转一转手柄，再打开扭蛋——今天会和哪个 AI 工具碰个面呢？":"RandomAI is a free random AI tool generator. Insert a coin, turn the crank, and discover something worth trying.",
