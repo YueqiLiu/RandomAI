@@ -45,11 +45,15 @@ function normalizeCatalog(payload){
 }
 let catalogSignature='';
 function applyCatalog(payload){
- const products=normalizeCatalog(payload);const signature=JSON.stringify(products);
+ const allProducts=normalizeCatalog(payload);
+ const products=window.RANDOMAI_TOPIC?allProducts.filter(p=>window.RANDOMAI_TOPIC.ids.includes(p.id)):allProducts;
+ if(!products.length)throw new Error('Empty topic pool');
+ const signature=JSON.stringify(products);
  if(signature!==catalogSignature){AI_PRODUCTS=products;productBag=[];catalogSignature=signature;}
  return products.length;
 }
 try{applyCatalog(window.RANDOM_AI_CATALOG);}catch{ /* Existing editorial seed remains usable. */ }
+if(window.RANDOMAI_TOPIC){AI_PRODUCTS=AI_PRODUCTS.filter(p=>window.RANDOMAI_TOPIC.ids.includes(p.id));}
 let syncingCatalog=false,lastCatalogAttempt=0;
 async function refreshCatalog(){
  if(syncingCatalog)return;syncingCatalog=true;lastCatalogAttempt=Date.now();

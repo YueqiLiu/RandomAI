@@ -4,10 +4,28 @@ document.querySelector('.controls').before(productSection);
 // Keep the same crawlable introduction node, after the machine and any revealed product.
 const discoveryGuide=window.randomaiDiscoveryGuide;
 if(discoveryGuide) document.querySelector('.controls').after(discoveryGuide);
+// Every page shares the same topic menu and footer navigation.
+const relatedNavigation=discoveryGuide?.querySelector('.category-nav');
+let topicMenu=null;
+if(relatedNavigation){
+ const navigation=relatedNavigation.cloneNode(true);
+ navigation.querySelector('.category-nav-heading')?.remove();
+ navigation.className='header-topic-links';
+ topicMenu=document.createElement('details');topicMenu.className='header-topic-menu';
+ const trigger=document.createElement('summary');trigger.className='header-topic-trigger';
+ topicMenu.append(trigger,navigation);
+ const header=document.querySelector('.brandbar');
+ const actions=document.createElement('div');actions.className='header-actions';
+ actions.append(topicMenu,header.lastElementChild);header.append(actions);
+ document.addEventListener('pointerdown',event=>{if(!topicMenu.contains(event.target))topicMenu.open=false;});
+ topicMenu.addEventListener('keydown',event=>{if(event.key==='Escape'){event.stopPropagation();topicMenu.open=false;trigger.focus();}});
+ topicMenu.addEventListener('focusout',event=>{if(!topicMenu.contains(event.relatedTarget))topicMenu.open=false;});
+}
 const footer=document.createElement('footer');footer.className='site-footer';
 footer.innerHTML=`<div class="footer-main"><div class="footer-directory"><span class="footer-eyebrow" data-i18n="探索完整产品库："></span><a href="https://www.topaitools4u.site/tools?utm_source=randomai&utm_medium=referral&utm_campaign=footer" target="_blank" rel="noopener noreferrer">TopAITools4U <span aria-hidden="true">↗</span></a></div></div><div class="footer-meta"><span data-i18n="免费灵感币，仅用于互动体验。"></span><span class="footer-credit"><span data-i18n="扭蛋机基于 "></span><a href="https://april-zhu.com/colorfigures" target="_blank" rel="noopener noreferrer">Colorfigures · April Zhu</a><span aria-hidden="true"> / </span><a href="/assets/vendor/colorfigures/LICENSE.txt">MIT</a></span></div>`;
+if(relatedNavigation)footer.querySelector('.footer-meta').before(relatedNavigation);
 document.body.append(footer);
-const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=discovery-9';document.head.append(css);
+const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=discovery-faces-1';document.head.append(css);
 let shown=null;
 const tr=key=>I18N.t(key);
 function toolReferralUrl(value){
@@ -22,7 +40,14 @@ window.renderProduct=state=>{
  productSection.replaceChildren();
  const content=I18N.lang==='en' ? p.en : p;
  const label=document.createElement('p');label.className='product-kicker';label.textContent=tr('你发现了 · ')+content.category;
- const name=document.createElement('h2');name.textContent=p.name;
+ const name=document.createElement('h2');name.className='product-title';
+ const draw=state.reviewProduct ? state.collected[state.reviewIndex] : state.out;
+ if(draw && !draw.discoveryFace)draw.discoveryFace=1+Math.floor(Math.random()*6);
+ const icon=document.createElement('img');icon.className='product-capsule-icon';
+ icon.src='/assets/brand/discovery-faces/face-'+(draw?.discoveryFace || 1)+'.svg';
+ icon.alt='';icon.setAttribute('aria-hidden','true');icon.width=36;icon.height=36;
+ const titleText=document.createElement('span');titleText.textContent=p.name;
+ name.append(icon,titleText);
  const experiment=discoveryExperiment(p);
  const facts=document.createElement('div');facts.className='product-facts';
  const en=I18N.lang==='en';
@@ -108,10 +133,24 @@ function applyLanguage(){
   el.textContent=I18N.lang==='en' && translated===el.dataset.i18n && el.hasAttribute('data-copy-en')?el.dataset.copyEn:translated;
  });
  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{el.setAttribute('aria-label',tr(el.getAttribute('data-i18n-aria')));if(el.classList.contains('sw'))el.title=el.getAttribute('aria-label');});
+ if(topicMenu){topicMenu.querySelector('summary').textContent=I18N.lang==='zh'?'主题扭蛋机':'Explore topics';topicMenu.querySelector('nav').setAttribute('aria-label',I18N.lang==='zh'?'主题扭蛋机':'Topic capsule machines');}
+ const relatedHeading=document.querySelector('.category-nav-heading');if(relatedHeading)relatedHeading.textContent=I18N.lang==='zh'?'探索其他主题扭蛋机':'Explore more capsule machines';
+ document.querySelectorAll('.category-nav a, .header-topic-links a').forEach(link=>{
+  const slug=link.getAttribute('href').split('/').filter(Boolean).pop();const topic=window.RANDOMAI_TOPICS?.[slug];
+  if(topic){link.textContent=topic[I18N.lang].name;link.href=(I18N.lang==='zh'?'/zh/':'/')+slug+'/';}
+  else if(link.getAttribute('href')==='/')link.textContent=I18N.lang==='zh'?'全部 AI 工具':'All AI tools';
+  if((topic&&slug===window.RANDOMAI_TOPIC_SLUG)||(!topic&&!window.RANDOMAI_TOPIC))link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');
+ });
  languageLabel.textContent=I18N.lang==='en'?'Language':'语言';
  triggerLabel.textContent=I18N.lang==='en'?'English':'简体中文';
  languageOptions.forEach(option=>option.setAttribute('aria-checked',option.dataset.language===I18N.lang));
  const toast=document.getElementById('toast');if(toast)toast.classList.remove('show');
+ if(window.RANDOMAI_TOPIC){
+  const topic=window.RANDOMAI_TOPIC[I18N.lang];
+  document.title=topic.title;document.querySelector('meta[name="description"]').content=topic.description;
+  const heading=document.querySelector('.intro h1');heading.removeAttribute('data-i18n');heading.textContent=topic.headline;
+  const subtitle=document.querySelector('.intro p:last-child');subtitle.removeAttribute('data-i18n');subtitle.textContent=topic.description;
+ }
  UI.drawStats();shown=null;window.renderProduct(UI.st);
 }
 document.addEventListener('languagechange',applyLanguage);applyLanguage();

@@ -39,3 +39,29 @@ The existing static Vercel configuration remains in use. Scripts are external to
 ## Languages
 
 The capsule homepage supports English and Simplified Chinese. First visits follow the browser’s preferred language: Chinese locales use Simplified Chinese; other locales fall back to English. The footer language dropdown switch UI, status messages, accessibility labels, metadata, and product descriptions without resetting the machine. An explicit choice persists in local storage under `randomai-language`; saved choices override browser detection on later visits. Translation map: `assets/i18n.js`; product English fields: `assets/products.js`. Existing legacy generator subpages retain their original English content.
+
+### Topic capsule pages
+
+Four reviewed pools are available at `/ai-video-tools/`, `/ai-image-tools/`,
+`/ai-coding-tools/`, and `/ai-presentation-tools/`. Chinese versions use the
+`/zh/` prefix. Explicit topic URLs select the page language; the footer language
+menu navigates to the matching translation and starts a fresh machine session.
+The homepage continues to use browser/saved language preferences and the full catalog.
+
+Topic membership is an explicit reviewed slug list in `scripts/build-category-pages.py`.
+Live catalog refreshes update the details of listed members, and exclude members no
+longer published. New tools require reviewing and adding their slug to the relevant
+pool. This deliberately avoids relying on inconsistent source category labels.
+Chinese pages retain original English catalog descriptions where translations are
+not available.
+
+After updating the catalog snapshot or topic lists, regenerate the static pages:
+
+```sh
+python3 scripts/build-category-pages.py
+node tests/catalog-topics.cjs
+```
+
+The generator updates eight static HTML pages and `assets/category-config.js`.
+Topic introductions, task guidance and FAQs are present in HTML without requiring a draw. The full pool is intentionally not displayed; product details are revealed by drawing a capsule.
+Each page has its own canonical URL, language alternate links, and sitemap entry.

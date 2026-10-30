@@ -65,7 +65,8 @@ window.randomaiDiscoveryGuide=document.getElementById('discovery-guide');
  const browserLanguage=(navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
  let lang=browserLanguage.startsWith('zh')?'zh':'en';
  try{const saved=localStorage.getItem('randomai-language');if(saved==='en'||saved==='zh')lang=saved;}catch{}
+ if(window.RANDOMAI_TOPIC)lang=location.pathname.startsWith('/zh/')?'zh':'en';
  const t=key=>lang==='en'?(copy[key]??key):key;
- window.I18N={get lang(){return lang;},t,set(value){if(!['en','zh'].includes(value))return;lang=value;try{localStorage.setItem('randomai-language',lang);}catch{}document.dispatchEvent(new Event('languagechange'));}};
+ window.I18N={get lang(){return lang;},t,set(value){if(!['en','zh'].includes(value))return;if(window.RANDOMAI_TOPIC&&value!==lang){try{localStorage.setItem('randomai-language',value);}catch{}location.assign((value==='zh'?'/zh/':'/')+window.RANDOMAI_TOPIC_SLUG+'/');return;}lang=value;try{localStorage.setItem('randomai-language',lang);}catch{}document.dispatchEvent(new Event('languagechange'));}};
  document.documentElement.lang=lang==='zh'?'zh-CN':'en';
 })();
