@@ -102,3 +102,9 @@ body{padding-top:16px}.brandbar{padding-bottom:12px}.intro{padding:12px 0 0}.int
 .product-capsule-icon{display:block;flex:0 0 36px;width:36px;height:36px}
 .product-title>span{min-width:0;overflow-wrap:anywhere}
 @media(max-width:560px){.product-capsule-icon{flex-basis:32px;width:32px;height:32px}#product .product-title{gap:8px}}
+
+/* Keep community badges on a swipeable single row. */
+.footer-meta>.footer-badges{display:flex;align-items:center;gap:16px;box-sizing:border-box;flex:0 1 268px;width:268px;min-width:0;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:6px 4px 10px;overscroll-behavior-x:contain;scrollbar-width:thin}
+.footer-badges>a{flex:0 0 auto;scroll-snap-align:start;min-height:44px}
+.footer-badges:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+@media(max-width:560px){.footer-meta>.footer-badges{flex:0 1 auto;width:min(268px,100%)}}

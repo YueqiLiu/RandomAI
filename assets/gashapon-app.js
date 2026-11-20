@@ -23,17 +23,32 @@ if(relatedNavigation){
 }
 const footer=document.createElement('footer');footer.className='site-footer';
 footer.innerHTML=`<div class="footer-main"><div class="footer-directory"><span class="footer-eyebrow" data-i18n="探索完整产品库："></span><a href="https://www.topaitools4u.site/tools?utm_source=randomai&utm_medium=referral&utm_campaign=footer" target="_blank" rel="noopener noreferrer">TopAITools4U <span aria-hidden="true">↗</span></a></div></div><div class="footer-meta"><span data-i18n="免费灵感币，仅用于互动体验。"></span><span class="footer-credit"><span data-i18n="扭蛋机基于 "></span><a href="https://april-zhu.com/colorfigures" target="_blank" rel="noopener noreferrer">Colorfigures · April Zhu</a><span aria-hidden="true"> / </span><a href="/assets/vendor/colorfigures/LICENSE.txt">MIT</a></span></div>`;
-const clubBadge=window.randomaiClubBadge||document.getElementById('openhunts-badge');
-const mydentifyBadge=window.randomaiMydentifyBadge||document.getElementById('mydentify-badge');
-if(clubBadge||mydentifyBadge){
- const badges=document.createElement('div');badges.style.cssText='display:flex;align-items:center;flex-wrap:wrap;gap:12px';
- if(clubBadge)badges.append(clubBadge);
- if(mydentifyBadge)badges.append(mydentifyBadge);
+// Add future badges to #homepage-badges in index.html; they are mounted here automatically.
+const badges=window.randomaiFooterBadges;
+if(badges){
+ badges.className='footer-badges';badges.tabIndex=0;badges.setAttribute('role','region');badges.setAttribute('aria-label','Community badges');
  footer.querySelector('.footer-meta').append(badges);
+ let paused=false,direction=1,lastTime=0;
+ badges.addEventListener('pointerenter',()=>{paused=true;});
+ badges.addEventListener('pointerleave',()=>{paused=false;});
+ badges.addEventListener('focusin',()=>{paused=true;});
+ badges.addEventListener('focusout',()=>{paused=badges.contains(document.activeElement);});
+ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+ function scrollBadges(time){
+  const elapsed=lastTime?Math.min(time-lastTime,50):0;lastTime=time;
+  const limit=badges.scrollWidth-badges.clientWidth;
+  if(!paused&&!reducedMotion.matches&&limit>0){
+   badges.scrollLeft+=direction*elapsed*0.025;
+   if(badges.scrollLeft>=limit-1)direction=-1;
+   else if(badges.scrollLeft<=0)direction=1;
+  }
+  requestAnimationFrame(scrollBadges);
+ }
+ requestAnimationFrame(scrollBadges);
 }
 if(relatedNavigation)footer.querySelector('.footer-meta').before(relatedNavigation);
 document.body.append(footer);
-const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=discovery-faces-1';document.head.append(css);
+const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=footer-badges-4';document.head.append(css);
 let shown=null;
 const tr=key=>I18N.t(key);
 function toolReferralUrl(value){

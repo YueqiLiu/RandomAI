@@ -1,5 +1,4 @@
-window.randomaiMydentifyBadge=document.getElementById('mydentify-badge');
-window.randomaiClubBadge=document.getElementById('openhunts-badge');
+window.randomaiFooterBadges=document.getElementById('homepage-badges');
 // Preserve the static introduction before the machine mounts its interface.
 window.randomaiDiscoveryGuide=document.getElementById('discovery-guide');
 /* Follow the browser language on first visit; explicit choices take precedence. */
