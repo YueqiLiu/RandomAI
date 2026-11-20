@@ -1,0 +1,13 @@
+# Local design and development artifacts
+.DS_Store
+**/node_modules/
+/RandomAI-Logo-Capsule-O/
+/RandomAI-Logo-Refined 2/
+/RandomAI-Logo-Refined/
+/RandomAI-Logo-Titlecase/
+/logo-concepts/
+/icon-options/
+/portfolio-lyq/
+/qa-gashapon/
+/RandomAI-Logo-Refined.zip
+/design-qa.md
