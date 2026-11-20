@@ -1,3 +1,4 @@
+window.randomaiMydentifyBadge=document.getElementById('mydentify-badge');
 window.randomaiClubBadge=document.getElementById('openhunts-badge');
 // Preserve the static introduction before the machine mounts its interface.
 window.randomaiDiscoveryGuide=document.getElementById('discovery-guide');
