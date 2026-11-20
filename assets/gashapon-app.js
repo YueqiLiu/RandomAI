@@ -28,7 +28,15 @@ const badges=window.randomaiFooterBadges;
 if(badges){
  badges.className='footer-badges';badges.tabIndex=0;badges.setAttribute('role','region');badges.setAttribute('aria-label','Community badges');
  footer.querySelector('.footer-meta').append(badges);
- let paused=false,direction=1,lastTime=0;
+ const track=document.createElement('div');track.className='footer-badge-track';
+ const group=document.createElement('div');group.className='footer-badge-group';
+ while(badges.firstChild)group.append(badges.firstChild);
+ track.append(group);badges.append(track);
+ const duplicate=group.cloneNode(true);duplicate.setAttribute('aria-hidden','true');
+ duplicate.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+ duplicate.querySelectorAll('a').forEach(link=>link.tabIndex=-1);
+ track.append(duplicate);
+ let paused=false,lastTime=0,offset=0;
  badges.addEventListener('pointerenter',()=>{paused=true;});
  badges.addEventListener('pointerleave',()=>{paused=false;});
  badges.addEventListener('focusin',()=>{paused=true;});
@@ -36,19 +44,16 @@ if(badges){
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
  function scrollBadges(time){
   const elapsed=lastTime?Math.min(time-lastTime,50):0;lastTime=time;
-  const limit=badges.scrollWidth-badges.clientWidth;
-  if(!paused&&!reducedMotion.matches&&limit>0){
-   badges.scrollLeft+=direction*elapsed*0.025;
-   if(badges.scrollLeft>=limit-1)direction=-1;
-   else if(badges.scrollLeft<=0)direction=1;
-  }
+  const distance=group.getBoundingClientRect().width;
+  if(reducedMotion.matches){offset=0;badges.scrollLeft=0;}
+  else if(!paused&&distance>0){offset=(offset+elapsed*0.025)%distance;badges.scrollLeft=offset;}
   requestAnimationFrame(scrollBadges);
  }
  requestAnimationFrame(scrollBadges);
 }
 if(relatedNavigation)footer.querySelector('.footer-meta').before(relatedNavigation);
 document.body.append(footer);
-const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=footer-badges-4';document.head.append(css);
+const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/gashapon.css?v=footer-badges-5';document.head.append(css);
 let shown=null;
 const tr=key=>I18N.t(key);
 function toolReferralUrl(value){
