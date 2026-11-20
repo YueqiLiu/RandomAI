@@ -23,7 +23,7 @@ if(relatedNavigation){
 }
 const footer=document.createElement('footer');footer.className='site-footer';
 footer.innerHTML=`<div class="footer-main"><div class="footer-directory"><span class="footer-eyebrow" data-i18n="探索完整产品库："></span><a href="https://www.topaitools4u.site/tools?utm_source=randomai&utm_medium=referral&utm_campaign=footer" target="_blank" rel="noopener noreferrer">TopAITools4U <span aria-hidden="true">↗</span></a></div></div><div class="footer-meta"><span data-i18n="免费灵感币，仅用于互动体验。"></span><span class="footer-credit"><span data-i18n="扭蛋机基于 "></span><a href="https://april-zhu.com/colorfigures" target="_blank" rel="noopener noreferrer">Colorfigures · April Zhu</a><span aria-hidden="true"> / </span><a href="/assets/vendor/colorfigures/LICENSE.txt">MIT</a></span></div>`;
-const clubBadge=document.getElementById('openhunts-badge');
+const clubBadge=window.randomaiClubBadge||document.getElementById('openhunts-badge');
 if(clubBadge)footer.querySelector('.footer-meta').append(clubBadge);
 if(relatedNavigation)footer.querySelector('.footer-meta').before(relatedNavigation);
 document.body.append(footer);
