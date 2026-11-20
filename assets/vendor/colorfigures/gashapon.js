@@ -1093,7 +1093,7 @@ function turnCrank(st, ui){
 function clickCapsule(st, ui){
   if (!st.out || st.roll) return;
   if (st.out.open <= 0){ st.out.opening = true; kick(); return; }
-  if (st.out.open >= 1){ const n = PRIZES[st.out.prize]; if(st.out.product) saveDiscovery(st.out.product); st.collected.push({prize:st.out.prize, product:st.out.product}); st.reviewProduct = null; st.reviewIndex = null; st.out = null; ui.flash('已收起惊喜，继续发现下一个 AI'); }
+  if (st.out.open >= 1){ const n = PRIZES[st.out.prize]; if(st.out.product) saveDiscovery(st.out.product); st.collected.push({prize:st.out.prize, product:st.out.product, discoveryFace:st.out.discoveryFace}); st.reviewProduct = null; st.reviewIndex = null; st.out = null; ui.flash('已收起惊喜，继续发现下一个 AI'); }
 }
 
 
